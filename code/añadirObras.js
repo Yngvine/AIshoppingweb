@@ -6,17 +6,22 @@ xhttp.onreadystatechange = function() {
         var elementosHtml = '';
 
         data.forEach(function(elemento) {
+            elementosHtml += '<div class="row element-container">'; // Add a class for styling
+            // Rest of your code
+            
             elementosHtml += '<div class="row">';
             elementosHtml += '<div class="col-12 col-md-6">';
-            elementosHtml += '<h4>' + elemento.nombre + '</h4>';
-            elementosHtml += '<img src="' + elemento.imagen + '" alt="Imagen del Elemento" class="img-fluid">';
+            elementosHtml += '<h4>' + elemento.Nombre + '</h4>';
+            elementosHtml += '<img src="assets/images/' + elemento.Imagen + '" alt="Imagen del Elemento" class="img-fluid">';
             elementosHtml += '</div>';
             elementosHtml += '<div class="col-12 col-md-6">';
-            elementosHtml += '<p>' + elemento.descripcion + '</p>';
-            elementosHtml += '<p>Autor: ' + elemento.autor + '</p>';
-            elementosHtml += '<p>Año: ' + elemento.año + '</p>';
-            elementosHtml += '<p>Palabra: ' + elemento.palabra + '</p>';
+            elementosHtml += '<p>' + elemento.Descripcion + '</p>';
+            elementosHtml += '<p><strong>Author:</strong> ' + elemento.Autor + '</p>';
+            elementosHtml += '<p><strong>Año:</strong> ' + elemento.AnoDeCreacion + '</p>';
             elementosHtml += '</div>';
+            elementosHtml += '</div>';
+            
+            elementosHtml += '<hr>';
             elementosHtml += '</div>';
         });
 
