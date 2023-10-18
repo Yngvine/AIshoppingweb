@@ -12,7 +12,7 @@ xhttp.onreadystatechange = function() {
             elementosHtml += '<div class="row">';
             elementosHtml += '<div class="col-12 col-md-6">';
             elementosHtml += '<h4>' + elemento.Nombre + '</h4>';
-            elementosHtml += '<img src="assets/images/' + elemento.Imagen + '" alt="Imagen del Elemento" class="img-fluid">';
+            elementosHtml += '<img src="assets/images/' + elemento.Imagen + '" alt="Imagen del Elemento" class="img-fluid image-with-padding">';
             elementosHtml += '</div>';
             elementosHtml += '<div class="col-12 col-md-6">';
             elementosHtml += '<p>' + elemento.Descripcion + '</p>';
@@ -30,3 +30,4 @@ xhttp.onreadystatechange = function() {
 };
 xhttp.open("GET", "datos.php", true);
 xhttp.send();
+
