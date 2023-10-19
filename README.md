@@ -2,7 +2,9 @@
 
 ## Gestión del Proyecto (Metodología SCRUM)
 
-[Gestión SCRUM](Gestión Proyecto Final.xlsx)
+El siguiente archivo de Excel se utiliza para seguir las prácticas de SCRUM, facilitando la gestión y el seguimiento del proyecto de manera eficiente.
+
+[Excel gestión SCRUM](https://unavarra-my.sharepoint.com/:x:/r/personal/reviriego_139534_e_unavarra_es/Documents/Gesti%C3%B3n%20Proyecto%20Final.xlsx?d=w6f9cae4f35814176b10ff47318406e38&csf=1&web=1&e=zslWKs)
 
 ## Getting started with GitLab
 
