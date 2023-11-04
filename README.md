@@ -6,7 +6,7 @@ El siguiente archivo de Excel se utiliza para seguir las prácticas de SCRUM, fa
 
 [Excel gestión Sprint 1](https://unavarra-my.sharepoint.com/:x:/r/personal/reviriego_139534_e_unavarra_es/Documents/Gesti%C3%B3n%20Proyecto%20Final.xlsx?d=w6f9cae4f35814176b10ff47318406e38&csf=1&web=1&e=zslWKs)
 
-[Excel gestión Sprint 2](https://unavarra-my.sharepoint.com/:x:/r/personal/reviriego_139534_e_unavarra_es/Documents/Gesti%C3%B3n%20Proyecto%20Final%20Sprint%202.xlsx?d=w2b86045dba1b40fa85a23c8980738b25&csf=1&web=1&e=ysDtqK)
+[Excel gestión Sprint 2](https://unavarra-my.sharepoint.com/:x:/r/personal/reviriego_139534_e_unavarra_es/Documents/Gesti%C3%B3n%20Proyecto%20Final%20Sprint%202.xlsx?d=w2b86045dba1b40fa85a23c8980738b25&csf=1&web=1&e=oDtq0U)
 
 # GitLab tutorial
 
