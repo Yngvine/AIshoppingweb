@@ -6,24 +6,16 @@ xhttp.onreadystatechange = function() {
         var elementosHtml = '';
 
         data.forEach(function(elemento) {
-            elementosHtml += '<div class="row element-container">'; // Add a class for styling
-            // Rest of your code
-            
-            elementosHtml += '<div class="row">';
-            elementosHtml += '<div class="col-12 col-md-6">';
-            elementosHtml += '<h4>' + elemento.Nombre + '</h4>';
-            elementosHtml += '<img src="assets/images/' + elemento.Imagen + '" alt="Imagen del Elemento" class="img-fluid image-with-padding">';
+            elementosHtml += '<div class="card mb-3">';
+            elementosHtml += '<img src="assets/images/' + elemento.Imagen + '" alt="Imagen del Elemento" class="card-img-top">';
+            elementosHtml += '<div class="card-body">';
+            elementosHtml += '<h5 class="card-title">' + elemento.Nombre + '</h5>';
+            elementosHtml += '<p class="card-text">Autor: ' + elemento.Autor + '</p>';
+            elementosHtml += '<p class="card-text">Precio: ' + elemento.Precio + '</p>';
             elementosHtml += '</div>';
-            elementosHtml += '<div class="col-12 col-md-6">';
-            elementosHtml += '<p>' + elemento.Descripcion + '</p>';
-            elementosHtml += '<p><strong>Author:</strong> ' + elemento.Autor + '</p>';
-            elementosHtml += '<p><strong>Año:</strong> ' + elemento.AnoDeCreacion + '</p>';
-            elementosHtml += '</div>';
-            elementosHtml += '</div>';
-            
-            elementosHtml += '<hr>';
             elementosHtml += '</div>';
         });
+        
 
         document.getElementById("elementos").innerHTML = elementosHtml;
     }

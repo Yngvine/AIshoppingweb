@@ -3,7 +3,7 @@
 $servername = "localhost"; // Replace with your MySQL server's hostname
 $username = "root"; // Replace with your MySQL username (default is often "root")
 $password = ""; // Replace with your MySQL password (default is often empty)
-$database = "web_db"; // Replace with your database name
+$database = "gpi"; // Replace with your database name
 
 // Create a connection to the MySQL database
 $conn = new mysqli($servername, $username, $password, $database);
