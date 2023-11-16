@@ -8,12 +8,12 @@ $database = "web_db"; // Replace with your database name
 // Create a connection to the MySQL database
 $conn = new mysqli($servername, $username, $password, $database);
 
-if ($mysqli->connect_error) {
-    die('Error de conexión: ' . $mysqli->connect_error);
+if ($conn->connect_error) {
+    die('Error de conexión: ' . $conn->connect_error);
 }
 
 // Obtener la lista completa de obras de arte
-$result = $mysqli->query("SELECT * FROM obras_de_arte");
+$result = $conn->query("SELECT * FROM obrasdearte");
 
 // Mostrar las obras de arte
 if ($result->num_rows > 0) {
@@ -27,5 +27,5 @@ if ($result->num_rows > 0) {
     echo 'No se encontraron obras de arte.';
 }
 
-$mysqli->close();
+$conn->close();
 ?>

@@ -8,15 +8,15 @@ $database = "web_db"; // Replace with your database name
 // Create a connection to the MySQL database
 $conn = new mysqli($servername, $username, $password, $database);
 
-if ($mysqli->connect_error) {
-    die('Error de conexión: ' . $mysqli->connect_error);
+if ($conn->connect_error) {
+    die('Error de conexión: ' . $conn->connect_error);
 }
 
 // Obtener el ID de la obra de arte seleccionada
-$artwork_id = $mysqli->real_escape_string($_POST['id']);
+$artwork_id = $conn->real_escape_string($_POST['id']);
 
 // Obtener los detalles de la obra de arte
-$result = $mysqli->query("SELECT * FROM obras_de_arte WHERE ID = '$artwork_id'");
+$result = $conn->query("SELECT * FROM obrasdearte WHERE ID = '$artwork_id'");
 $row = $result->fetch_assoc();
 
 // Mostrar el formulario de edición
@@ -40,5 +40,5 @@ echo '<input type="text" id="artworkType" value="' . $row['TipoDeArte'] . '">';
 echo '<button onclick="updateArtwork(' . $artwork_id . ')">Guardar cambios</button>';
 echo '</form>';
 
-$mysqli->close();
+$conn->close();
 ?>

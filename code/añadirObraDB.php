@@ -5,7 +5,7 @@ $username = "root"; // Replace with your MySQL username (default is often "root"
 $password = ""; // Replace with your MySQL password (default is often empty)
 $database = "web_db"; // Replace with your database name
 // Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
+$conn = new mysqli($servername, $username, $password, $database);
 
 // Check connection
 if ($conn->connect_error) {
@@ -30,14 +30,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $artType = sanitizeInput($_POST["artType"]);
 
     // Upload image to a folder on the server
-    $targetDirectory = "uploads/"; // Create this directory in your project
+    $targetDirectory = "assest/images/"; // Create this directory in your project
     $targetFile = $targetDirectory . basename($image);
 
     move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile);
 
     // SQL query to insert data into the database
-    $sql = "INSERT INTO your_table_name (Nombre, Precio, Imagen, Descripcion, AnoDeCreacion, Estilo, Autor, TipoDeArte)
-            VALUES ('$name', $price, '$targetFile', '$description', $year, '$style', '$author', '$artType')";
+    $sql = "INSERT INTO obrasdearte (Nombre, Precio, Imagen, Descripcion, AnoDeCreacion, Estilo, Autor, TipoDeArte)
+            VALUES ('$name', $price, '$image', '$description', $year, '$style', '$author', '$artType')";
 
     if ($conn->query($sql) === TRUE) {
         echo "Product added successfully";
