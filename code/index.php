@@ -4,6 +4,6 @@
     <title>Your Page Title</title>
 </head>
 <body>
-    <?php include('mainPage.html'); ?>
+    <?php include('mainPage.php'); ?>
 </body>
 </html>

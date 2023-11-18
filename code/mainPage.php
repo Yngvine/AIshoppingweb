@@ -10,6 +10,22 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="añadirObras.js"></script>
 
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+        /* Add your custom styles here */
+        .chart-icon {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 24px;
+            color: #ffffffc2;
+            cursor: pointer;
+        }
+    </style>
+ 
+
     <style>
         .element-container {
             margin-bottom: 20px; /* Add a margin between elements */
@@ -48,6 +64,15 @@
             </div>
         </div>
     </nav>
+    <!-- Display the chart icon if the user is logged in -->
+    <div>
+    <?php
+        session_start();
+        if (isset($_SESSION["username"]) && !empty($_SESSION["username"])) {
+            echo '<i class="fas fa-shopping-cart chart-icon"></i>';
+        }
+    ?>
+    </div>
 
     <!-- Contenido principal -->
     <div class="container my-5">

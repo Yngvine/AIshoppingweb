@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     print_r( $result );
     if ($result->num_rows > 0) {
         $_SESSION["username"] = $user_mail;
-        header("Location: mainPage.html");
+        header("Location: index.php");
         exit();
     }
     else {
