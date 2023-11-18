@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <!-- Add your stylesheets and scripts here as needed -->
+    <!-- Example: -->
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+</head>
+<body>
+
+    <h1>Shopping Cart</h1>
+
+    <!-- Display the artworks in the cart -->
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- This part will be dynamically populated with cart items -->
+            <tr>
+                <td>1</td>
+                <td>Artwork 1</td>
+                <td>$100.00</td>
+                <td><button onclick="removeFromCart(1)">Remove</button></td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>Artwork 2</td>
+                <td>$150.00</td>
+                <td><button onclick="removeFromCart(2)">Remove</button></td>
+            </tr>
+            <!-- Repeat this structure for each item in the cart -->
+        </tbody>
+    </table>
+
+    <!-- Add checkout or other relevant features as needed -->
+
+    <!-- Example script for removing items from the cart -->
+    <script>
+        function removeFromCart(artworkID) {
+            // You can use JavaScript or AJAX to remove the item from the cart
+            // For now, this is a placeholder function
+            alert('Removing artwork with ID ' + artworkID);
+        }
+    </script>
+
+</body>
+</html>
