@@ -8,8 +8,8 @@ $database = "web_db";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     session_start();
     // Retrieve username and password from the form
-    $username = $_POST["mail"];
-    $password = $_POST["password"];
+    $user_mail = $_POST["username"];
+    $user_password = $_POST["password"];
 
     $conn = new mysqli($servername, $username, $password, $database);
     
@@ -17,11 +17,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $password = md5($password);
-    $sql = "SELECT * FROM usuarios WHERE CorreoElectronico = '$mail' AND Contrasena = '$password'";
+    $user_password = md5($user_password);
+    $sql = "SELECT * FROM usuarios WHERE CorreoElectronico = '$user_mail' AND Contrasena = '$user_password'";
+    echo $sql;
     $result = $conn->query($sql);
+    print_r( $result );
     if ($result->num_rows > 0) {
-        $_SESSION["username"] = $username;
+        $_SESSION["username"] = $user_mail;
         header("Location: mainPage.html");
         exit();
     }
