@@ -1,3 +1,4 @@
+<!-- cart.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,6 +61,32 @@
 </head>
 <body>
 
+     <!-- Barra de navegación -->
+     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="#">Colores y Sueños</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Acerca de</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
         <h1 class="mb-4">Shopping Cart</h1>
 
@@ -73,40 +100,79 @@
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- This part will be dynamically populated with cart items -->
-                <tr>
-                    <td>1</td>
-                    <td>Artwork 1</td>
-                    <td>$100.00</td>
-                    <td>
-                        <button class="remove-button" onclick="removeFromCart(1)">Remove</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Artwork 2</td>
-                    <td>$150.00</td>
-                    <td>
-                        <button class="remove-button" onclick="removeFromCart(2)">Remove</button>
-                    </td>
-                </tr>
-                <!-- Repeat this structure for each item in the cart -->
-            </tbody>
+            <tbody id="cart-items"><!-- Cart items will be dynamically added here --></tbody>
         </table>
+
+        <!-- Go Back button -->
+        <button class="btn btn-primary" onclick="goBack()">Go Back</button>
     </div>
 
     <!-- Example script for removing items from the cart -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script>
+        // Function to go back to the main page
+        function goBack() {
+            window.location.href = 'mainPage.php';
+        }
+
+        // Function to fetch cart items and update HTML
+        // Function to fetch cart items and update HTML
+        function fetchCartItems() {
+            $.ajax({
+                url: 'cartData.php',
+                type: 'GET',
+                dataType: 'text', // Expecting plain text
+                success: function(data) {
+                    // Check if the response is valid JSON
+                    try {
+                        var jsonData = JSON.parse(data);
+
+                        // Clear existing items in the cart
+                        $('#cart-items').empty();
+
+                        if (jsonData.length > 0) {
+                            // Append new items to the cart
+                            $.each(jsonData, function(index, item) {
+                                $('#cart-items').append(`
+                                    <tr>
+                                        <td>${item.ID}</td>
+                                        <td>${item.Nombre}</td>
+                                        <td>${item.Precio}</td>
+                                        <td>
+                                            <button class="remove-button" onclick="removeFromCart(${item.ID})">Remove</button>
+                                        </td>
+                                    </tr>
+                                `);
+                            });
+                        }
+                    } catch (e) {
+                        // Handle the case when the response is not valid JSON
+                        // Display the message from PHP if no items in the cart
+                        $('#cart-items').html(`
+                                <tr>
+                                    <td colspan="4" class="text-center">${data}</td>
+                                </tr>
+                            `);
+                    }
+                },
+                error: function() {
+                    console.error('Error fetching cart items');
+                }
+            });
+        }
+        // Call the function to fetch and display cart items on page load
+        $(document).ready(function() {
+            fetchCartItems();
+        });
+    
+        // Example function for removing items from the cart
         function removeFromCart(artworkID) {
             // You can use JavaScript or AJAX to remove the item from the cart
             // For now, this is a placeholder function
             alert('Removing artwork with ID ' + artworkID);
         }
     </script>
-
-    <!-- Add the link to the Bootstrap JS file (optional) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
 </body>
 </html>
