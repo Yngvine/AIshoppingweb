@@ -68,4 +68,64 @@ document.addEventListener("DOMContentLoaded", function() {
 
         document.getElementById("elementos").innerHTML = '<div class="row">' + elementosHtml + '</div>';
     }
+
+    // Obtener una lista de estilos únicos de los elementos
+    function obtenerEstilosUnicos() {
+        var estilosUnicos = [];
+        data.forEach(function(elemento) {
+            if (!estilosUnicos.includes(elemento.Estilo)) {
+                estilosUnicos.push(elemento.Estilo);
+            }
+        });
+        return estilosUnicos;
+    }
+
+    // Función para filtrar los elementos por estilo
+    function filtrarPorEstilo(estilosSeleccionados) {
+        var elementosFiltrados = [];
+        if (estilosSeleccionados.length === 0) {
+            elementosFiltrados = data;
+        } else {
+            data.forEach(function(elemento) {
+                if (estilosSeleccionados.includes(elemento.Estilo)) {
+                    elementosFiltrados.push(elemento);
+                }
+            });
+        }
+        return elementosFiltrados;
+    }
+
+    // Función para renderizar los elementos después del filtrado
+    function renderizarPaginaFiltrada(numeroPagina, estilosSeleccionados) {
+        var elementosFiltrados = filtrarPorEstilo(estilosSeleccionados);
+        // Resto del código para renderizar la página con los elementos filtrados
+        // Similar a la función renderizarPagina pero utilizando elementosFiltrados
+    }
+
+    // Obtener estilos únicos y crear casillas de verificación para cada uno
+    var estilosUnicos = obtenerEstilosUnicos();
+    var filtroEstilos = document.getElementById("filtroEstilos");
+
+    estilosUnicos.forEach(function(estilo) {
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.id = estilo;
+        checkbox.value = estilo;
+        checkbox.addEventListener("change", function() {
+            var estilosSeleccionados = [];
+            var checkboxes = filtroEstilos.querySelectorAll("input[type=checkbox]:checked");
+            checkboxes.forEach(function(checkbox) {
+                estilosSeleccionados.push(checkbox.value);
+            });
+            renderizarPaginaFiltrada(paginaActual, estilosSeleccionados);
+        });
+
+        var label = document.createElement("label");
+        label.htmlFor = estilo;
+        label.appendChild(document.createTextNode(estilo));
+
+        filtroEstilos.appendChild(checkbox);
+        filtroEstilos.appendChild(label);
+        filtroEstilos.appendChild(document.createElement("br"));
+    });
 });
