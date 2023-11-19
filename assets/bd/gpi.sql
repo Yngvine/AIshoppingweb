@@ -74,24 +74,26 @@ CREATE TABLE `usuarios` (
   `ID` int(11) NOT NULL,
   `Nombre` varchar(50) DEFAULT NULL,
   `CorreoElectronico` varchar(50) DEFAULT NULL,
-  `Contrasena` varchar(50) DEFAULT NULL
+  `Contrasena` varchar(50) DEFAULT NULL,
+  `Admin` bit DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`ID`, `Nombre`, `CorreoElectronico`, `Contrasena`) VALUES
-(1, 'Usuario1', 'usuario1@example.com', 'contrasena1'),
-(2, 'Usuario2', 'usuario2@example.com', 'contrasena2'),
-(3, 'Usuario3', 'usuario3@example.com', 'contrasena3'),
-(4, 'Usuario4', 'usuario4@example.com', 'contrasena4'),
-(5, 'Usuario5', 'usuario5@example.com', 'contrasena5'),
-(6, 'Usuario6', 'usuario6@example.com', 'contrasena6'),
-(7, 'Usuario7', 'usuario7@example.com', 'contrasena7'),
-(8, 'Usuario8', 'usuario8@example.com', 'contrasena8'),
-(9, 'Usuario9', 'usuario9@example.com', 'contrasena9'),
-(10, 'Usuario10', 'usuario10@example.com', 'contrasena10');
+INSERT INTO `usuarios` (`ID`, `Nombre`, `CorreoElectronico`, `Contrasena`, `Admin`) VALUES
+(1, 'admin', 'admin@admin.com', 'admin', 1),
+(1, 'Usuario1', 'usuario1@example.com', 'contrasena1', 0),
+(2, 'Usuario2', 'usuario2@example.com', 'contrasena2', 0),
+(3, 'Usuario3', 'usuario3@example.com', 'contrasena3', 0),
+(4, 'Usuario4', 'usuario4@example.com', 'contrasena4', 0),
+(5, 'Usuario5', 'usuario5@example.com', 'contrasena5', 0),
+(6, 'Usuario6', 'usuario6@example.com', 'contrasena6', 0),
+(7, 'Usuario7', 'usuario7@example.com', 'contrasena7', 0),
+(8, 'Usuario8', 'usuario8@example.com', 'contrasena8', 0),
+(9, 'Usuario9', 'usuario9@example.com', 'contrasena9', 0),
+(10, 'Usuario10', 'usuario10@example.com', 'contrasena10', 0);
 
 --
 -- Índices para tablas volcadas

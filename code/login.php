@@ -20,8 +20,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = md5($password);
     $sql = "SELECT * FROM usuarios WHERE CorreoElectronico = '$mail' AND Contrasena = '$password'";
     $result = $conn->query($sql);
+    $row = $result->fetch_assoc();
     if ($result->num_rows > 0) {
         $_SESSION["username"] = $username;
+        //if admin value is 1, then the user is an admin
+        if ($row["admin"] == 1) {
+            $_SESSION["admin"] = true;
+        }
+        else {
+            $_SESSION["admin"] = false;
+        }
         header("Location: mainPage.html");
         exit();
     }
