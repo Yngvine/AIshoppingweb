@@ -69,7 +69,9 @@
     <?php
         session_start();
         if (isset($_SESSION["username"]) && !empty($_SESSION["username"])) {
+            echo '<a href="cart.html">';
             echo '<i class="fas fa-shopping-cart chart-icon"></i>';
+            echo '</a>';
         }
     ?>
     </div>
