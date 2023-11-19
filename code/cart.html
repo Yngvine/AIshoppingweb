@@ -117,43 +117,36 @@
         }
 
         // Function to fetch cart items and update HTML
-        // Function to fetch cart items and update HTML
         function fetchCartItems() {
             $.ajax({
                 url: 'cartData.php',
                 type: 'GET',
-                dataType: 'text', // Expecting plain text
+                dataType: 'json',
                 success: function(data) {
-                    // Check if the response is valid JSON
-                    try {
-                        var jsonData = JSON.parse(data);
+                    // Clear existing items in the cart
+                    $('#cart-items').empty();
 
-                        // Clear existing items in the cart
-                        $('#cart-items').empty();
-
-                        if (jsonData.length > 0) {
-                            // Append new items to the cart
-                            $.each(jsonData, function(index, item) {
-                                $('#cart-items').append(`
-                                    <tr>
-                                        <td>${item.ID}</td>
-                                        <td>${item.Nombre}</td>
-                                        <td>${item.Precio}</td>
-                                        <td>
-                                            <button class="remove-button" onclick="removeFromCart(${item.ID})">Remove</button>
-                                        </td>
-                                    </tr>
-                                `);
-                            });
-                        }
-                    } catch (e) {
-                        // Handle the case when the response is not valid JSON
-                        // Display the message from PHP if no items in the cart
-                        $('#cart-items').html(`
+                    if (data.length > 0) {
+                        // Append new items to the cart
+                        $.each(data, function(index, item) {
+                            $('#cart-items').append(`
                                 <tr>
-                                    <td colspan="4" class="text-center">${data}</td>
+                                    <td>${item.ID}</td>
+                                    <td>${item.Nombre}</td>
+                                    <td>${item.Precio}</td>
+                                    <td>
+                                        <button class="remove-button" onclick="removeFromCart(${item.ID})">Remove</button>
+                                    </td>
                                 </tr>
                             `);
+                        });
+                    } else {
+                        // Display the message from PHP if no items in the cart
+                        $('#cart-items').html(`
+                            <tr>
+                                <td colspan="4" class="text-center">No items in the cart</td>
+                            </tr>
+                        `);
                     }
                 },
                 error: function() {
@@ -161,16 +154,28 @@
                 }
             });
         }
+
         // Call the function to fetch and display cart items on page load
         $(document).ready(function() {
             fetchCartItems();
         });
-    
-        // Example function for removing items from the cart
+
+        // Function to remove items from the cart
         function removeFromCart(artworkID) {
-            // You can use JavaScript or AJAX to remove the item from the cart
-            // For now, this is a placeholder function
-            alert('Removing artwork with ID ' + artworkID);
+            // Send an AJAX request to remove the item from the cart
+            $.ajax({
+                url: 'removeFromCart.php', // Replace with the actual PHP script for removing from the cart
+                type: 'POST',
+                data: { id: artworkID },
+                success: function(response) {
+                    // Refresh the cart items after successful removal
+                    fetchCartItems();
+                    alert('Item removed from the cart.');
+                },
+                error: function() {
+                    console.error('Error removing item from the cart');
+                }
+            });
         }
     </script>
 
