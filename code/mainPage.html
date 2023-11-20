@@ -53,9 +53,30 @@
         <div class="container my-5">
             <h2>Piezas de arte</h2>
 
-            <!-- Filtro por estilo -->
-            <div class="mb-4" id="filtroEstilos">
-                <!-- Aquí se insertarán las casillas de verificación -->
+            <!-- Filtro para rango de precios -->
+            <div id="filtroContainer" class="my-4">
+                <label for="filtroPrecioMin">Precio mínimo:</label>
+                <input type="number" id="filtroPrecioMin" placeholder="Precio mínimo">
+
+                <label for="filtroPrecioMax">Precio máximo:</label>
+                <input type="number" id="filtroPrecioMax" placeholder="Precio máximo">
+
+                <button id="filtrarPrecioBtn" class="btn btn-secondary">Filtrar</button>
+            </div>
+
+            <!-- Filtro para estilo -->
+            <div id="filtroContainer" class="my-4">
+                <label for="filtroEstilo">Estilo:</label>
+                <select id="filtroEstilo">
+                    <option value="">Todos los estilos</option>
+                    <option value="Impresionista">Impresionismo</option>
+                    <option value="Cubismo">Cubismo</option>
+                    <option value="Cubismo">Realismo</option>
+                    <option value="Románico">Románico</option>
+                    <!-- Agregar más opciones según los estilos disponibles -->
+                </select>
+
+                <button id="filtrarEstiloBtn" class="btn btn-secondary">Filtrar</button>
             </div>
 
             <div class="container my-5">

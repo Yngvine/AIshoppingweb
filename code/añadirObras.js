@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function() {
     var elementosPorPagina = 3; // Número de elementos por página
     var paginaActual = 1; // Página inicial
     var data = []; // Array que contendrá todos los elementos
-    var elementosHtml = ''; // String que contendrá el HTML de los elementos a mostrar
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -11,22 +10,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
             // Renderizar la página actual
             renderizarPagina(paginaActual);
-
-            // Event listeners para botones de paginación
-            document.getElementById("prevPage").addEventListener("click", function() {
-                if (paginaActual > 1) {
-                    paginaActual--;
-                    renderizarPagina(paginaActual);
-                }
-            });
-
-            document.getElementById("nextPage").addEventListener("click", function() {
-                var totalPages = Math.ceil(data.length / elementosPorPagina);
-                if (paginaActual < totalPages) {
-                    paginaActual++;
-                    renderizarPagina(paginaActual);
-                }
-            });
         }
     };
 
@@ -34,12 +17,34 @@ document.addEventListener("DOMContentLoaded", function() {
     xhttp.send();
 
     function renderizarPagina(numeroPagina) {
+        var filtroPrecioMin = document.getElementById('filtroPrecioMin').value;
+        var filtroPrecioMax = document.getElementById('filtroPrecioMax').value;
+        var filtroEstilo = document.getElementById('filtroEstilo').value;
+    
+        var elementosFiltrados = data.filter(function(elemento) {
+            var precio = parseFloat(elemento.Precio);
+    
+            var pasaFiltroPrecio = true;
+            if (filtroPrecioMin !== '' && filtroPrecioMax !== '') {
+                pasaFiltroPrecio = precio >= parseFloat(filtroPrecioMin) && precio <= parseFloat(filtroPrecioMax);
+            }
+    
+            var pasaFiltroEstilo = true;
+            if (filtroEstilo !== '') {
+                pasaFiltroEstilo = elemento.Estilo.toLowerCase().includes(filtroEstilo.toLowerCase());
+            }
+    
+            return pasaFiltroPrecio && pasaFiltroEstilo;
+        });
+
+        var totalPages = Math.ceil(elementosFiltrados.length / elementosPorPagina); // Calcular las páginas
+
+        // Actualizar lógica de paginación
         var inicio = (numeroPagina - 1) * elementosPorPagina;
         var fin = inicio + elementosPorPagina;
-        var elementosPagina = data.slice(inicio, fin);
+        var elementosPagina = elementosFiltrados.slice(inicio, fin);
 
-        elementosHtml = '';
-
+        var elementosHtml = '';
         elementosPagina.forEach(function(elemento) {
             elementosHtml += '<div class="col-lg-4 col-md-6 mb-4">'; // Tamaño de las columnas ajustado para dispositivos grandes y medianos
             elementosHtml += '<div class="card" style="background-color: beige;">';
@@ -69,63 +74,50 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("elementos").innerHTML = '<div class="row">' + elementosHtml + '</div>';
     }
 
-    // Obtener una lista de estilos únicos de los elementos
-    function obtenerEstilosUnicos() {
-        var estilosUnicos = [];
-        data.forEach(function(elemento) {
-            if (!estilosUnicos.includes(elemento.Estilo)) {
-                estilosUnicos.push(elemento.Estilo);
-            }
-        });
-        return estilosUnicos;
-    }
+    // Agregar evento al botón de filtrar por precio
+    document.getElementById("filtrarPrecioBtn").addEventListener("click", function() {
+        renderizarPagina(paginaActual);
+    });
 
-    // Función para filtrar los elementos por estilo
-    function filtrarPorEstilo(estilosSeleccionados) {
-        var elementosFiltrados = [];
-        if (estilosSeleccionados.length === 0) {
-            elementosFiltrados = data;
-        } else {
-            data.forEach(function(elemento) {
-                if (estilosSeleccionados.includes(elemento.Estilo)) {
-                    elementosFiltrados.push(elemento);
-                }
-            });
+    // Agregar evento al botón de filtrar por estilo
+    document.getElementById("filtrarEstiloBtn").addEventListener("click", function() {
+        renderizarPagina(paginaActual);
+    });
+
+    // Event listeners para botones de paginación
+    document.getElementById("prevPage").addEventListener("click", function() {
+        if (paginaActual > 1) {
+            paginaActual--;
+            renderizarPagina(paginaActual);
         }
-        return elementosFiltrados;
-    }
+    });
 
-    // Función para renderizar los elementos después del filtrado
-    function renderizarPaginaFiltrada(numeroPagina, estilosSeleccionados) {
-        var elementosFiltrados = filtrarPorEstilo(estilosSeleccionados);
-        // Resto del código para renderizar la página con los elementos filtrados
-        // Similar a la función renderizarPagina pero utilizando elementosFiltrados
-    }
+    document.getElementById("nextPage").addEventListener("click", function() {
+        var filtroPrecioMin = document.getElementById('filtroPrecioMin').value;
+        var filtroPrecioMax = document.getElementById('filtroPrecioMax').value;
+        var filtroEstilo = document.getElementById('filtroEstilo').value;
 
-    // Obtener estilos únicos y crear casillas de verificación para cada uno
-    var estilosUnicos = obtenerEstilosUnicos();
-    var filtroEstilos = document.getElementById("filtroEstilos");
+        var elementosFiltrados = data.filter(function(elemento) {
+            var precio = parseFloat(elemento.Precio);
 
-    estilosUnicos.forEach(function(estilo) {
-        var checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.id = estilo;
-        checkbox.value = estilo;
-        checkbox.addEventListener("change", function() {
-            var estilosSeleccionados = [];
-            var checkboxes = filtroEstilos.querySelectorAll("input[type=checkbox]:checked");
-            checkboxes.forEach(function(checkbox) {
-                estilosSeleccionados.push(checkbox.value);
-            });
-            renderizarPaginaFiltrada(paginaActual, estilosSeleccionados);
+            var pasaFiltroPrecio = true;
+            if (filtroPrecioMin !== '' && filtroPrecioMax !== '') {
+                pasaFiltroPrecio = precio >= parseFloat(filtroPrecioMin) && precio <= parseFloat(filtroPrecioMax);
+            }
+
+            var pasaFiltroEstilo = true;
+            if (filtroEstilo !== '') {
+                pasaFiltroEstilo = elemento.Estilo.toLowerCase() === filtroEstilo.toLowerCase();
+            }
+
+            return pasaFiltroPrecio && pasaFiltroEstilo;
         });
 
-        var label = document.createElement("label");
-        label.htmlFor = estilo;
-        label.appendChild(document.createTextNode(estilo));
+        var totalPages = Math.ceil(elementosFiltrados.length / elementosPorPagina);
 
-        filtroEstilos.appendChild(checkbox);
-        filtroEstilos.appendChild(label);
-        filtroEstilos.appendChild(document.createElement("br"));
+        if (paginaActual < totalPages) {
+            paginaActual++;
+            renderizarPagina(paginaActual);
+        }
     });
 });
