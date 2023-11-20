@@ -2,7 +2,7 @@
 $servername = "localhost"; 
 $username = "root"; 
 $password = ""; 
-$database = "web_db"; 
+$database = "gpi"; 
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -19,7 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $user_password = md5($user_password);
     $sql = "SELECT * FROM usuarios WHERE CorreoElectronico = '$user_mail' AND Contrasena = '$user_password'";
-    echo $sql;
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     if ($result->num_rows > 0) {
@@ -36,7 +35,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     else {
         $_SESSION["username"] = "";
-        echo -1;
+        echo '<script type="text/javascript">alert("Invalid username or password. Please try again.");</script>';
+        header("Location: login.html");
     }
     $conn->close();
 }
