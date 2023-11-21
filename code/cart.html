@@ -105,6 +105,9 @@
 
         <!-- Go Back button -->
         <button class="btn btn-primary" onclick="goBack()">Go Back</button>
+        <!-- Add this button in your shopping cart page -->
+        <button class="btn btn-success" onclick="goToCheckout()">Proceed to Checkout</button>
+
     </div>
 
     <!-- Example script for removing items from the cart -->
@@ -181,6 +184,12 @@
                 }
             });
         }
+        
+        // Add this function in your script tag or external JavaScript file
+        function goToCheckout() {
+            window.location.href = 'checkout.php';
+        }
+
     </script>
 
 </body>
