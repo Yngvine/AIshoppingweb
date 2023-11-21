@@ -50,6 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Insert data into the database with the new ID
     $sql = "INSERT INTO obrasdearte (ID, Nombre, Precio, Imagen, Descripcion, AnoDeCreacion, Estilo, Autor, TipoDeArte)
             VALUES ($newID, '$name', $price, '$image', '$description', $year, '$style', '$author', '$artType')";
+            
 
     if ($conn->query($sql) === TRUE) {
         echo "Product added successfully";

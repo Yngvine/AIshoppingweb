@@ -44,7 +44,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contacto</a>
                     </li>
-                </ul>
+                    <?php
+                    session_start();
+                    if (isset($_SESSION["admin"]) && ($_SESSION["admin"] === TRUE)) {
+                        echo '<li class="nav-item">
+                                <a class="nav-link" href="adminPage.html">Admin Page</a>
+                            </li>';
+                    }
+                    ?>
             </div>
         </div>
     </nav>
