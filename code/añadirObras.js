@@ -72,6 +72,8 @@ document.addEventListener("DOMContentLoaded", function() {
             elementosHtml += '<p class="card-text author"><span>Autor:</span> ' + elemento.Autor + '</p>';
             elementosHtml += '<p class="card-text"><span class="price bg-warning text-dark rounded px-2">Precio: ' + elemento.Precio + '</span></p>';
             elementosHtml += '<button class="btn btn-secondary info-btn" data-bs-toggle="modal" data-bs-target="#infoModal' + elemento.id + '">+ Info</button>';
+            // Add to Cart button
+            elementosHtml += '<button class="btn btn-primary add-to-cart-btn" onclick="addToCart(' + elemento.ID + ')">Add to Cart</button>';
             elementosHtml += '</div></div></div>';
 
             // Modal para la información adicional
@@ -134,3 +136,23 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+function addToCart(elementID) {
+    // Make an AJAX call to your PHP script for adding to the cart
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var response = JSON.parse(this.responseText);
+                if (response.success) {
+                    // Item added to cart successfully
+                    alert('Item added to cart successfully!');
+                } else {
+                    // Display an appropriate error message
+                    alert(response.message);
+                }
+        }
+    };
+    
+    xhttp.open("GET", "addToCart.php?elementID=" + elementID, true);
+    xhttp.send();
+}
