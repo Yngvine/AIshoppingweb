@@ -6,7 +6,6 @@ $database = "web_bd";
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    session_start();
     // Retrieve username and password from the form
     $user_mail = $_POST["username"];
     $user_password = $_POST["password"];
@@ -22,6 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     if ($result->num_rows > 0) {
+        session_start();
         $_SESSION["username"] = $user_mail;
         if ($row["admin"] == 1) {
             $_SESSION["admin"] = true;
@@ -34,7 +34,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
     else {
-        $_SESSION["username"] = "";
         echo '<script type="text/javascript">alert("Invalid username or password. Please try again.");</script>';
         header("Location: login.html");
     }
