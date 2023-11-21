@@ -52,32 +52,45 @@
         <h1>Bienvenido a Colores y Sueños</h1>
         <div class="container my-5">
             <h2>Piezas de arte</h2>
-
-            <!-- Filtro para rango de precios -->
+            
             <div id="filtroContainer" class="my-4">
-                <label for="filtroPrecioMin">Precio mínimo:</label>
-                <input type="number" id="filtroPrecioMin" placeholder="Precio mínimo">
-
-                <label for="filtroPrecioMax">Precio máximo:</label>
-                <input type="number" id="filtroPrecioMax" placeholder="Precio máximo">
-
-                <button id="filtrarPrecioBtn" class="btn btn-secondary">Filtrar</button>
-            </div>
-
-            <!-- Filtro para estilo -->
-            <div id="filtroContainer" class="my-4">
-                <label for="filtroEstilo">Estilo:</label>
-                <select id="filtroEstilo">
-                    <option value="">Todos los estilos</option>
-                    <option value="Impresionista">Impresionismo</option>
-                    <option value="Cubismo">Cubismo</option>
-                    <option value="Cubismo">Realismo</option>
-                    <option value="Románico">Románico</option>
-                    <!-- Agregar más opciones según los estilos disponibles -->
-                </select>
-
-                <button id="filtrarEstiloBtn" class="btn btn-secondary">Filtrar</button>
-            </div>
+                <div class="row g-3">
+                    <div class="col-md">
+                        <label for="filtroPrecioMin" class="form-label">Precio mínimo:</label>
+                        <input type="number" class="form-control" id="filtroPrecioMin" placeholder="Precio mínimo">
+                    </div>
+                    <div class="col-md">
+                        <label for="filtroPrecioMax" class="form-label">Precio máximo:</label>
+                        <input type="number" class="form-control" id="filtroPrecioMax" placeholder="Precio máximo">
+                    </div>
+                    <div class="col-md">
+                        <label for="filtroEstilo" class="form-label">Estilo:</label>
+                        <select class="form-select" id="filtroEstilo">
+                            <option value="">Todos los estilos</option>
+                            <option value="Impresionista">Impresionismo</option>
+                            <option value="Cubismo">Cubismo</option>
+                            <option value="Cubismo">Realismo</option>
+                            <option value="Románico">Románico</option>
+                            <!-- Agregar más opciones según los estilos disponibles -->
+                        </select>
+                    </div>
+                    <div class="col-md">
+                        <label for="filtroNombre" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="filtroNombre" placeholder="Nombre">
+                    </div>
+                    <div class="col-md">
+                        <label for="filtroAno" class="form-label">Año de Creación:</label>
+                        <input type="number" class="form-control" id="filtroAno" placeholder="Año de Creación">
+                    </div>
+                    <div class="col-md">
+                        <label for="filtroAutor" class="form-label">Autor:</label>
+                        <input type="text" class="form-control" id="filtroAutor" placeholder="Autor">
+                    </div>
+                    <div class="col-md-auto align-self-end">
+                        <button id="filtrarBtn" class="btn btn-secondary">Filtrar</button>
+                    </div>
+                </div>
+            </div>            
 
             <div class="container my-5">
                 <h2>Lista de Elementos</h2>

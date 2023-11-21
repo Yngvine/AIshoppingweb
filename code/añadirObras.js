@@ -20,6 +20,9 @@ document.addEventListener("DOMContentLoaded", function() {
         var filtroPrecioMin = document.getElementById('filtroPrecioMin').value;
         var filtroPrecioMax = document.getElementById('filtroPrecioMax').value;
         var filtroEstilo = document.getElementById('filtroEstilo').value;
+        var filtroNombre = document.getElementById('filtroNombre').value.toLowerCase();
+        var filtroAno = document.getElementById('filtroAno').value.toLowerCase();
+        var filtroAutor = document.getElementById('filtroAutor').value.toLowerCase();
     
         var elementosFiltrados = data.filter(function(elemento) {
             var precio = parseFloat(elemento.Precio);
@@ -34,11 +37,26 @@ document.addEventListener("DOMContentLoaded", function() {
                 pasaFiltroEstilo = elemento.Estilo.toLowerCase().includes(filtroEstilo.toLowerCase());
             }
     
-            return pasaFiltroPrecio && pasaFiltroEstilo;
+            var pasaFiltroNombre = true;
+            if (filtroNombre !== '') {
+                pasaFiltroNombre = elemento.Nombre.toLowerCase().includes(filtroNombre);
+            }
+    
+            var pasaFiltroAno = true;
+            if (filtroAno !== '') {
+                pasaFiltroAno = elemento.AnoDeCreacion.toLowerCase().includes(filtroAno);
+            }
+    
+            var pasaFiltroAutor = true;
+            if (filtroAutor !== '') {
+                pasaFiltroAutor = elemento.Autor.toLowerCase().includes(filtroAutor);
+            }
+    
+            return pasaFiltroPrecio && pasaFiltroEstilo && pasaFiltroNombre && pasaFiltroAno && pasaFiltroAutor;
         });
-
+    
         var totalPages = Math.ceil(elementosFiltrados.length / elementosPorPagina); // Calcular las páginas
-
+    
         // Actualizar lógica de paginación
         var inicio = (numeroPagina - 1) * elementosPorPagina;
         var fin = inicio + elementosPorPagina;
@@ -72,15 +90,10 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
         document.getElementById("elementos").innerHTML = '<div class="row">' + elementosHtml + '</div>';
-    }
+    }    
 
     // Agregar evento al botón de filtrar por precio
-    document.getElementById("filtrarPrecioBtn").addEventListener("click", function() {
-        renderizarPagina(paginaActual);
-    });
-
-    // Agregar evento al botón de filtrar por estilo
-    document.getElementById("filtrarEstiloBtn").addEventListener("click", function() {
+    document.getElementById("filtrarBtn").addEventListener("click", function() {
         renderizarPagina(paginaActual);
     });
 
