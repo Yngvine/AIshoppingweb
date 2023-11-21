@@ -1,8 +1,9 @@
 <?php
+session_start();
 $servername = "localhost"; 
 $username = "root"; 
 $password = ""; 
-$database = "web_bd"; 
+$database = "web_db"; 
 
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -21,16 +22,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
     if ($result->num_rows > 0) {
-        session_start();
         $_SESSION["username"] = $user_mail;
-        if ($row["admin"] == 1) {
-            $_SESSION["admin"] = true;
+        if ($row["Admin"] == 1) {
+            $_SESSION["admin"] = 1;
         }
         else {
-            $_SESSION["admin"] = false;
+            $_SESSION["admin"] = 0;
         }
         print_r( $result );
-        header("Location: mainPage.html");
+        header("Location: mainPage.php");
         exit();
     }
     else {

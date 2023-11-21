@@ -95,6 +95,8 @@ INSERT INTO `usuarios` (`ID`, `Nombre`, `CorreoElectronico`, `Contrasena`) VALUE
 (9, 'Usuario9', 'usuario9@example.com', '39bcf9ff587fa61fef01735543b25e60'),
 (10, 'Usuario10', 'usuario10@example.com', '60da703b0fcbd743ab453382a0b351c6');
 
+INSERT INTO `usuarios` (`ID`, `Nombre`, `CorreoElectronico`, `Contrasena`, `Admin`) VALUES ('12', 'admin', 'admin@admin.com', '21232f297a57a5a743894a0e4a801fc3', b'1'); 
+
 --
 -- Índices para tablas volcadas
 --

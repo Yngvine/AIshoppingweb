@@ -27,38 +27,50 @@
 
 </head>
 <body>
-    <!-- Barra de navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
-        <div class="container">
-            <a class="navbar-brand" href="#">Colores y Sueños</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Inicio</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Acerca de</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Servicios</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Contacto</a>
-                    </li>
+    <!-- ... (previous code) ... -->
+
+<!-- Barra de navegación -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
+    <div class="container">
+        <a class="navbar-brand" href="#">Colores y Sueños</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Inicio</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Acerca de</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Servicios</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Contacto</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
                     <?php
                     session_start();
-                    if (isset($_SESSION["admin"]) && ($_SESSION["admin"] === TRUE)) {
-                        echo '<li class="nav-item">
-                                <a class="nav-link" href="adminPage.html">Admin Page</a>
-                            </li>';
+                    if (isset($_SESSION["admin"]) && ($_SESSION["admin"] == 1)) {
+                        echo '<a class="btn btn-dark" href="adminPage.html">Admin Page</a>&nbsp;&nbsp;';
+                    }
+
+                    if (isset($_SESSION["username"])) {
+                        echo '<a class="btn btn-danger" href="logout.php">Logout</a>';
+                    } else {
+                        echo '<a class="btn btn-success" href="login.html">Login</a>';
                     }
                     ?>
-            </div>
+                </li>
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
     <!-- Contenido principal -->
     <div class="container my-5">
