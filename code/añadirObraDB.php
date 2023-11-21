@@ -18,6 +18,7 @@ function sanitizeInput($input) {
     return $conn->real_escape_string($input);
 }
 
+
 // Process the form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = sanitizeInput($_POST["name"]);
@@ -30,14 +31,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $artType = sanitizeInput($_POST["artType"]);
 
     // Upload image to a folder on the server
-    $targetDirectory = "assest/images/"; // Create this directory in your project
+    $targetDirectory = "assets/images/"; // Create this directory in your project
     $targetFile = $targetDirectory . basename($image);
 
     move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile);
+    // Get the last inserted ID from obrasdearte
+    $lastIDQuery = "SELECT MAX(ID) AS lastID FROM obrasdearte";
+    $result = $conn->query($lastIDQuery);
 
-    // SQL query to insert data into the database
-    $sql = "INSERT INTO obrasdearte (Nombre, Precio, Imagen, Descripcion, AnoDeCreacion, Estilo, Autor, TipoDeArte)
-            VALUES ('$name', $price, '$image', '$description', $year, '$style', '$author', '$artType')";
+    if ($result && $row = $result->fetch_assoc()) {
+        $lastID = $row['lastID'];
+        $newID = $lastID + 1;
+    } else {
+        // Default to 1 if no records exist
+        $newID = 0;
+    }
+
+    // Insert data into the database with the new ID
+    $sql = "INSERT INTO obrasdearte (ID, Nombre, Precio, Imagen, Descripcion, AnoDeCreacion, Estilo, Autor, TipoDeArte)
+            VALUES ($newID, '$name', $price, '$image', '$description', $year, '$style', '$author', '$artType')"
 
     if ($conn->query($sql) === TRUE) {
         echo "Product added successfully";
