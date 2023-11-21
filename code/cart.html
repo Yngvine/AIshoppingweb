@@ -118,17 +118,21 @@
 
         // Function to fetch cart items and update HTML
         function fetchCartItems() {
-            $.ajax({
-                url: 'cartData.php',
-                type: 'GET',
-                dataType: 'json',
-                success: function(data) {
+        $.ajax({
+            url: 'cartData.php',
+            type: 'GET',
+            dataType: 'text', // Expecting plain text
+            success: function(data) {
+                // Check if the response is valid JSON
+                try {
+                    var jsonData = JSON.parse(data);
+
                     // Clear existing items in the cart
                     $('#cart-items').empty();
 
-                    if (data.length > 0) {
+                    if (jsonData.length > 0) {
                         // Append new items to the cart
-                        $.each(data, function(index, item) {
+                        $.each(jsonData, function(index, item) {
                             $('#cart-items').append(`
                                 <tr>
                                     <td>${item.ID}</td>
@@ -140,22 +144,22 @@
                                 </tr>
                             `);
                         });
-                    } else {
-                        // Display the message from PHP if no items in the cart
-                        $('#cart-items').html(`
-                            <tr>
-                                <td colspan="4" class="text-center">No items in the cart</td>
-                            </tr>
-                        `);
                     }
-                },
-                error: function() {
-                    console.error('Error fetching cart items');
+                } catch (e) {
+                    // Display the message from PHP if no items in the cart
+                    $('#cart-items').html(`
+                        <tr>
+                            <td colspan="4" class="text-center">${data}</td>
+                        </tr>
+                    `);
                 }
-            });
-        }
-
-        // Call the function to fetch and display cart items on page load
+            },
+            error: function() {
+                console.error('Error fetching cart items');
+            }
+        });
+    }
+    // Call the function to fetch and display cart items on page load
         $(document).ready(function() {
             fetchCartItems();
         });
