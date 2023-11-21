@@ -70,23 +70,9 @@ document.addEventListener("DOMContentLoaded", function() {
             elementosHtml += '<div class="card-body">';
             elementosHtml += '<h5 class="card-title">' + elemento.Nombre + '</h5>';
             elementosHtml += '<p class="card-text author"><span>Autor:</span> ' + elemento.Autor + '</p>';
-            elementosHtml += '<p class="card-text"><span class="price bg-warning text-dark rounded px-2">Precio: ' + elemento.Precio + '</span></p>';
-            elementosHtml += '<button class="btn btn-secondary info-btn" data-bs-toggle="modal" data-bs-target="#infoModal' + elemento.id + '">+ Info</button>';
+            elementosHtml += '<p class="card-text"><span class="price bg-warning text-dark rounded px-2">Precio: ' + elemento.Precio + '€</span></p>';
+            elementosHtml += '<a href="producto.html?id=' + elemento.ID + '" class="btn btn-secondary info-btn">+ Info</a>';
             elementosHtml += '</div></div></div>';
-
-            // Modal para la información adicional
-            elementosHtml += '<div class="modal fade" id="infoModal' + elemento.id + '" tabindex="-1">';
-            elementosHtml += '<div class="modal-dialog">';
-            elementosHtml += '<div class="modal-content">';
-            elementosHtml += '<div class="modal-header">';
-            elementosHtml += '<h5 class="modal-title">Información Adicional</h5>';
-            elementosHtml += '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
-            elementosHtml += '</div>';  
-            elementosHtml += '<div class="modal-body">';
-            elementosHtml += '<p><strong>Descripción:</strong> ' + elemento.Descripcion + '</p>';
-            elementosHtml += '<p><strong>Año de Creación:</strong> ' + elemento.AnoDeCreacion + '</p>';
-            elementosHtml += '<p><strong>Estilo:</strong> ' + elemento.Estilo + '</p>';
-            elementosHtml += '</div></div></div></div>';
         });
 
         document.getElementById("elementos").innerHTML = '<div class="row">' + elementosHtml + '</div>';
