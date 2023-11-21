@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-10-2023 a las 22:41:21
+-- Tiempo de generación: 18-11-2023 a las 16:46:30
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `gpi`
+-- Base de datos: `web_db`
 --
 
 -- --------------------------------------------------------
@@ -74,24 +74,26 @@ CREATE TABLE `usuarios` (
   `ID` int(11) NOT NULL,
   `Nombre` varchar(50) DEFAULT NULL,
   `CorreoElectronico` varchar(50) DEFAULT NULL,
-  `Contrasena` varchar(50) DEFAULT NULL
+  `Contrasena` varchar(50) DEFAULT NULL,
+  `Admin` bit DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 --
 -- Volcado de datos para la tabla `usuarios`
 --
 
 INSERT INTO `usuarios` (`ID`, `Nombre`, `CorreoElectronico`, `Contrasena`) VALUES
-(1, 'Usuario1', 'usuario1@example.com', 'contrasena1'),
-(2, 'Usuario2', 'usuario2@example.com', 'contrasena2'),
-(3, 'Usuario3', 'usuario3@example.com', 'contrasena3'),
-(4, 'Usuario4', 'usuario4@example.com', 'contrasena4'),
-(5, 'Usuario5', 'usuario5@example.com', 'contrasena5'),
-(6, 'Usuario6', 'usuario6@example.com', 'contrasena6'),
-(7, 'Usuario7', 'usuario7@example.com', 'contrasena7'),
-(8, 'Usuario8', 'usuario8@example.com', 'contrasena8'),
-(9, 'Usuario9', 'usuario9@example.com', 'contrasena9'),
-(10, 'Usuario10', 'usuario10@example.com', 'contrasena10');
+(1, 'Usuario1', 'usuario1@example.com', 'f1b4dea0aceeb5b732d62bad9545cd35'),
+(2, 'Usuario2', 'usuario2@example.com', 'c9050e7078a260e808a8991e5cc1b3f0'),
+(3, 'Usuario3', 'usuario3@example.com', '90fe2049445178a1840bd71dc6c07ce8'),
+(4, 'Usuario4', 'usuario4@example.com', '9794230d6e317739e0d2a1be87becb94'),
+(5, 'Usuario5', 'usuario5@example.com', '6bf1c4df57af5ade48b354bf959b4464'),
+(6, 'Usuario6', 'usuario6@example.com', '91a81c79944c294500eca88bd906ed13'),
+(7, 'Usuario7', 'usuario7@example.com', '1abc9603f106657665bcdd608f302b0b'),
+(8, 'Usuario8', 'usuario8@example.com', '8b07327223bcdd1a7c4e16fd9bf04831'),
+(9, 'Usuario9', 'usuario9@example.com', '39bcf9ff587fa61fef01735543b25e60'),
+(10, 'Usuario10', 'usuario10@example.com', '60da703b0fcbd743ab453382a0b351c6');
 
 --
 -- Índices para tablas volcadas

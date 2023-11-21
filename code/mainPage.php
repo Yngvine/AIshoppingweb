@@ -18,6 +18,12 @@
             margin-bottom: 10px; /* Add padding at the bottom of the image */
         }
     </style>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+      <link rel="stylesheet" href="/openai-chatbot-main/style.css">
 
 </head>
 <body>
@@ -42,7 +48,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">Contacto</a>
                     </li>
-                </ul>
+                    <?php
+                    session_start();
+                    if (isset($_SESSION["admin"]) && ($_SESSION["admin"] === TRUE)) {
+                        echo '<li class="nav-item">
+                                <a class="nav-link" href="adminPage.html">Admin Page</a>
+                            </li>';
+                    }
+                    ?>
             </div>
         </div>
     </nav>
@@ -106,6 +119,25 @@
     </div>
 
     <script src="añadirObras.js"></script>
+    
+    <button id="chat-toggle"><i class="far fa-comment"></i></button>
+    <div id="chat-widget">
+      <div id="chat-container">
+        <div id="chat-title">Chat Title</div>
+        <div id="chat-messages"></div>
+        <div id="chat-input-container">
+          <input id="chat-input" type="text" placeholder="Write your message">
+          <button id="chat-send">Send</button>
+          <div id="loading">
+            <div class="spinner"></div>
+            <div class="message">Loading...</div>
+          </div>        
+        </div>
+      </div>
+    </div>
+    
+  
+    <script src="/openai-chatbot-main/script.js"></script>
 
     <!-- Pie de página -->
     <footer class="bg-dark text-light py-3">
