@@ -8,7 +8,6 @@
     <!-- Agregar el enlace al archivo CSS de Bootstrap -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="añadirObras.js"></script>
 
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -30,17 +29,16 @@
         .element-container {
             margin-bottom: 20px; /* Add a margin between elements */
         }
-        
+
         .image-with-padding {
             margin-bottom: 10px; /* Add padding at the bottom of the image */
         }
     </style>
-    
 
 </head>
 <body>
     <!-- Barra de navegación -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
         <div class="container">
             <a class="navbar-brand" href="#">Colores y Sueños</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -81,15 +79,58 @@
         <h1>Bienvenido a Colores y Sueños</h1>
         <div class="container my-5">
             <h2>Piezas de arte</h2>
+            
+            <div id="filtroContainer" class="my-4">
+                <div class="row g-3">
+                    <div class="col-md">
+                        <label for="filtroPrecioMin" class="form-label">Precio mínimo:</label>
+                        <input type="number" class="form-control" id="filtroPrecioMin" placeholder="Precio mínimo">
+                    </div>
+                    <div class="col-md">
+                        <label for="filtroPrecioMax" class="form-label">Precio máximo:</label>
+                        <input type="number" class="form-control" id="filtroPrecioMax" placeholder="Precio máximo">
+                    </div>
+                    <div class="col-md">
+                        <label for="filtroEstilo" class="form-label">Estilo:</label>
+                        <select class="form-select" id="filtroEstilo">
+                            <option value="">Todos los estilos</option>
+                            <option value="Impresionista">Impresionismo</option>
+                            <option value="Cubismo">Cubismo</option>
+                            <option value="Cubismo">Realismo</option>
+                            <option value="Románico">Románico</option>
+                            <!-- Agregar más opciones según los estilos disponibles -->
+                        </select>
+                    </div>
+                    <div class="col-md">
+                        <label for="filtroNombre" class="form-label">Nombre:</label>
+                        <input type="text" class="form-control" id="filtroNombre" placeholder="Nombre">
+                    </div>
+                    <div class="col-md">
+                        <label for="filtroAno" class="form-label">Año de Creación:</label>
+                        <input type="number" class="form-control" id="filtroAno" placeholder="Año de Creación">
+                    </div>
+                    <div class="col-md">
+                        <label for="filtroAutor" class="form-label">Autor:</label>
+                        <input type="text" class="form-control" id="filtroAutor" placeholder="Autor">
+                    </div>
+                    <div class="col-md-auto align-self-end">
+                        <button id="filtrarBtn" class="btn btn-secondary">Filtrar</button>
+                    </div>
+                </div>
+            </div>            
+
             <div class="container my-5">
                 <h2>Lista de Elementos</h2>
                 <div id="elementos"></div>
+                <div class="text-center mt-4">
+                    <button id="prevPage" class="btn btn-secondary me-2">Página Anterior</button>
+                    <button id="nextPage" class="btn btn-secondary">Página Siguiente</button>
+                </div>
             </div>
-    
         </div>
     </div>
+
     <script src="añadirObras.js"></script>
-    
 
     <!-- Pie de página -->
     <footer class="bg-dark text-light py-3">
@@ -100,7 +141,5 @@
 
     <!-- Agregar el enlace al archivo JavaScript de Bootstrap (opcional) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-
-    
 </body>
 </html>
