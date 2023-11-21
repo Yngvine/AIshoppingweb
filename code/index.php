@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <?php include('mainPage.html'); ?>
+    <?php include('mainPage.php'); ?>
 </body>
 </html>
