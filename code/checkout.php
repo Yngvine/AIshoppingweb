@@ -81,28 +81,15 @@
             </form>
         </section>
 
-
         <!-- Section 2: Payment Method Selection -->
         <section>
             <h2>Payment Method</h2>
-            <!-- Your radio buttons for payment method selection -->
+            <!-- Only Credit Card option -->
             <form>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" value="creditCard" checked>
                     <label class="form-check-label" for="creditCard">
                         Credit Card (MasterCard/Visa)
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="paypal" value="paypal">
-                    <label class="form-check-label" for="paypal">
-                        PayPal
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer" value="bankTransfer">
-                    <label class="form-check-label" for="bankTransfer">
-                        Bank Transfer
                     </label>
                 </div>
             </form>
@@ -111,9 +98,8 @@
         <!-- Section 3: Payment Data based on Selection -->
         <section>
             <h2>Payment Data</h2>
-            <!-- Your form fields for payment data based on the selected method -->
-            <form id="paymentDataForm">
-                <!-- Fields for credit card -->
+            <!-- Form fields for credit card -->
+            <form id="paymentDataForm" action="orderObra.php" method="post">
                 <div id="creditCardFields">
                     <div class="mb-3">
                         <label for="cardholderName" class="form-label">Cardholder Name</label>
@@ -135,25 +121,12 @@
                             <input type="text" class="form-control" id="cvv" name="cvv" required>
                         </div>
                     </div>
-                    <!-- Add more credit card fields as needed -->
                 </div>
 
-                <!-- Fields for PayPal -->
-                <div id="paypalFields" style="display: none;">
-                    <div class="mb-3">
-                        <label for="paypalEmail" class="form-label">PayPal Email</label>
-                        <input type="email" class="form-control" id="paypalEmail" name="paypalEmail" required>
-                    </div>
-                    <!-- Add more PayPal fields as needed -->
-                </div>
+                <!-- Hidden input for additionalInfo -->
+                <input type="hidden" id="additionalInfo" name="additionalInfo" value="">
 
-                <!-- Fields for Bank Transfer -->
-                <div id="bankTransferFields" class="mb-3">
-                    <label for="bankAccount" class="form-label">Bank Account Number</label>
-                    <input type="text" class="form-control" id="bankAccount" name="bankAccount" required>
-                </div>
-
-                <!-- Add a submit button -->
+                <!-- Submit button -->
                 <button type="submit" class="btn btn-primary">Submit Order</button>
             </form>
         </section>
@@ -163,35 +136,61 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script>
-        // Add your JavaScript for handling form interactions here
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add event listener for payment method selection
+        document.addEventListener('DOMContentLoaded', function () {
+            // Add event listener for form submission
+            var orderForm = document.getElementById('paymentDataForm');
+            orderForm.addEventListener('submit', function (event) {
+                event.preventDefault(); // Prevent the form from submitting initially
+
+                // Get the selected payment method
+                var selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+                // Set the value of the additionalInfo field based on the selected payment method
+                var additionalInfoField = document.getElementById('additionalInfo');
+                if (selectedPaymentMethod === 'creditCard') {
+                    // Customize this part based on your credit card fields
+                    additionalInfoField.value = JSON.stringify({
+                        cardholderName: document.getElementById('cardholderName').value,
+                        cardNumber: document.getElementById('cardNumber').value,
+                        expirationDate: document.getElementById('expirationDate').value,
+                        cvv: document.getElementById('cvv').value
+                    });
+                    // Set the 'required' attribute for credit card fields
+                    document.getElementById('cardholderName').required = true;
+                    document.getElementById('cardNumber').required = true;
+                    document.getElementById('expirationDate').required = true;
+                    document.getElementById('cvv').required = true;
+                }
+
+                // Now, you can submit the form
+                orderForm.submit();
+            });
+
+            // Add event listener for payment method change
             var paymentMethodRadios = document.getElementsByName('paymentMethod');
             paymentMethodRadios.forEach(function(radio) {
                 radio.addEventListener('change', handlePaymentMethodChange);
             });
-        });
 
-        function handlePaymentMethodChange() {
-            // Hide all payment data sections
-            hidePaymentDataSections();
+            function handlePaymentMethodChange() {
+                // Hide all payment data sections
+                hidePaymentDataSections();
 
-            // Show the selected payment data section
-            var selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
-            var selectedPaymentDataSection = document.getElementById(selectedPaymentMethod + 'Fields');
-            if (selectedPaymentDataSection) {
-                selectedPaymentDataSection.style.display = 'block';
+                // Show the selected payment data section
+                var selectedPaymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+                var selectedPaymentDataSection = document.getElementById(selectedPaymentMethod + 'Fields');
+                if (selectedPaymentDataSection) {
+                    selectedPaymentDataSection.style.display = 'block';
+                }
             }
-        }
 
-        function hidePaymentDataSections() {
-            var paymentDataSections = document.querySelectorAll('[id$="Fields"]');
-            paymentDataSections.forEach(function(section) {
-                section.style.display = 'none';
-            });
-        }
-
-        // Add additional scripts as needed
+            function hidePaymentDataSections() {
+                var paymentDataSections = document.querySelectorAll('[id$="Fields"]');
+                paymentDataSections.forEach(function(section) {
+                    section.style.display = 'none';
+                });
+            }
+        });
     </script>
 </body>
 </html>
