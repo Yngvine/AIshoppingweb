@@ -39,8 +39,6 @@ document.addEventListener("DOMContentLoaded", function() {
             elementosHtml += '<p class="card-text author"><span>Autor:</span> ' + elemento.Autor + '</p>';
             elementosHtml += '<p class="card-text"><span class="price bg-warning text-dark rounded px-2">Precio: ' + elemento.Precio + '€</span></p>';
             elementosHtml += '<a href="producto.html?id=' + elemento.ID + '" class="btn btn-secondary info-btn">+ Info</a>';
-            // Add to Cart button
-            elementosHtml += '<button class="btn btn-primary add-to-cart-btn" onclick="addToCart(' + elemento.ID + ')">Add to Cart</button>';
             elementosHtml += '</div></div></div>';
         });
 
