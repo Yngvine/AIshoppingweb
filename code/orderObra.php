@@ -37,53 +37,93 @@ if (!($userIDResult->num_rows > 0)) {
 $userIDRow = $userIDResult->fetch_assoc();
 $userID = $userIDRow['ID'];
 
-// Process the form submission
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Personal data
-    $firstName = sanitizeInput($_POST["firstName"]);
-    $lastName = sanitizeInput($_POST["lastName"]);
-    $birthDate = sanitizeInput($_POST["birthDate"]);
-    $nationality = sanitizeInput($_POST["nationality"]);
-    $email = sanitizeInput($_POST["email"]);
-    $phone = sanitizeInput($_POST["phone"]);
-    $streetAddress = sanitizeInput($_POST["streetAddress"]);
-    $city = sanitizeInput($_POST["city"]);
-    $country = sanitizeInput($_POST["country"]);
 
-    // Payment data
-    $paymentMethod = sanitizeInput($_POST["paymentMethod"]);
-    $additionalInfo = sanitizeInput($_POST["additionalInfo"]);
+    // Personal Data
+    $firstName = $_POST["firstName"];
+    $lastName = $_POST["lastName"];
+    $birthDate = $_POST["birthDate"];
+    $nationality = $_POST["nationality"];
+    $email = $_POST["email"];
+    $phone = $_POST["phone"];
+    $streetAddress = $_POST["streetAddress"];
+    $city = $_POST["city"];
+    $country = $_POST["country"];
 
-    // Structure additional information as a JSON string
-    $additionalInfoJSON = json_encode(array(
-        'firstName' => $firstName,
-        'lastName' => $lastName,
-        'birthDate' => $birthDate,
-        'nationality' => $nationality,
-        'email' => $email,
-        'phone' => $phone,
-        'streetAddress' => $streetAddress,
-        'city' => $city,
-        'country' => $country,
-        'additionalInfo' => json_decode($additionalInfo, true), // Decode JSON string
-    ));
+    // Payment Data
+    $paymentMethod = $_POST["paymentMethod"];
+    $additionalInfo = $_POST["additionalInfo"];
 
-    // Insert personal data into the compras table
-    $sql = "INSERT INTO compras (IDUsuario, FechaDeCompra, Cantidad, Datos)
-            VALUES (
-                '$userID',  -- Replace with the actual user ID, assuming you have a user session
-                NOW(),  -- Use the current date and time for the purchase
-                1,  -- Assuming a quantity of 1 for simplicity
-                '$additionalInfoJSON'
-            )";
+    // Get the IDObra values from the carrito table
+    $carritoQuery = $conn->query("SELECT IDObra FROM carrito WHERE IDUsuario = $userID");
+    $IDObraArray = [];
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Order submitted successfully";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+    while ($row = $carritoQuery->fetch_assoc()) {
+        $IDObraArray[] = $row['IDObra'];
     }
-}
 
-// Close the database connection
-$conn->close();
+    // Save data into the database for each IDObra
+    foreach ($IDObraArray as $IDObra) {
+        $stmt = $conn->prepare("INSERT INTO compras (ID, IDUsuario, IDObraDeArte, FechaDeCompra, Cantidad, Datos) VALUES (?, ?, ?, NOW(), ?, ?)");
+
+        // Assuming Cantidad is obtained based on your application logic
+        $cantidad = 1; // Replace with your logic to get the quantity
+
+        // Combine personal and payment data into a JSON string
+        $datos = json_encode([
+            'firstName' => $firstName,
+            'lastName' => $lastName,
+            'birthDate' => $birthDate,
+            'nationality' => $nationality,
+            'email' => $email,
+            'phone' => $phone,
+            'streetAddress' => $streetAddress,
+            'city' => $city,
+            'country' => $country,
+            'paymentMethod' => $paymentMethod,
+            'additionalInfo' => json_decode($additionalInfo, true) // Decode JSON string
+        ]);
+        // Get the last inserted ID from obrasdearte
+        $lastIDQuery = "SELECT MAX(ID) AS lastID FROM compras";
+        $result = $conn->query($lastIDQuery);
+
+        if ($result && $row = $result->fetch_assoc()) {
+            $lastID = $row['lastID'];
+            $newID = $lastID + 1;
+        } else {
+            // Default to 1 if no records exist
+            $newID = 0;
+        }
+
+        $stmt->bind_param("iiiis", $newID, $userID, $IDObra, $cantidad, $datos);
+
+        if ($stmt->execute()) {
+            echo "Order placed successfully for IDObra: $IDObra <br>";
+
+            // After successfully inserting into compras, delete from carrito
+            $deleteCarritoQuery = "DELETE FROM carrito WHERE IDUsuario = $userID AND IDObra = $IDObra";
+            if ($conn->query($deleteCarritoQuery) === TRUE) {
+                echo "Deleted from carrito successfully. <br>";
+            } else {
+                echo "Error deleting from carrito: " . $conn->error . "<br>";
+            }
+
+            // Set vendida attribute in obrasdearte to true
+            $updateObrasdearteQuery = "UPDATE obrasdearte SET vendida = true WHERE ID = $IDObra";
+            if ($conn->query($updateObrasdearteQuery) === TRUE) {
+                echo "Updated obrasdearte successfully. <br>";
+            } else {
+                echo "Error updating obrasdearte: " . $conn->error . "<br>";
+            }
+        } else {
+            echo "Error: " . $stmt->error . "<br>";
+        }
+
+        $stmt->close();
+    }
+
+    $conn->close();
+} else {
+    echo "Invalid request method!";
+}
 ?>

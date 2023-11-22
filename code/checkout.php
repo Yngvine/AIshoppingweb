@@ -23,11 +23,13 @@
     <div class="container">
         <h1 class="mb-4">Checkout</h1>
 
-        <!-- Section 1: Personal Data and Shipment Direction -->
-        <section>
-            <h2>Personal Data</h2>
-            <!-- Your form fields for personal information and shipment direction -->
-            <form>
+        <form id="checkoutForm" action="orderObra.php" method="post">
+
+            <!-- Section 1: Personal Data and Shipment Direction -->
+            <section>
+                <h2>Personal Data</h2>
+                <!-- Your form fields for personal information and shipment direction -->
+                
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="firstName" class="form-label">First Name</label>
@@ -78,28 +80,25 @@
                 </div>
 
                 <!-- Add more form fields for personal data and shipment direction -->
-            </form>
-        </section>
+                
+            </section>
 
-        <!-- Section 2: Payment Method Selection -->
-        <section>
-            <h2>Payment Method</h2>
-            <!-- Only Credit Card option -->
-            <form>
+            <!-- Section 2: Payment Method Selection -->
+            <section>
+                <h2>Payment Method</h2>
+                <!-- Only Credit Card option -->
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" value="creditCard" checked>
                     <label class="form-check-label" for="creditCard">
                         Credit Card (MasterCard/Visa)
                     </label>
                 </div>
-            </form>
-        </section>
+            </section>
 
-        <!-- Section 3: Payment Data based on Selection -->
-        <section>
-            <h2>Payment Data</h2>
-            <!-- Form fields for credit card -->
-            <form id="paymentDataForm" action="orderObra.php" method="post">
+            <!-- Section 3: Payment Data based on Selection -->
+            <section>
+                <h2>Payment Data</h2>
+                <!-- Form fields for credit card -->
                 <div id="creditCardFields">
                     <div class="mb-3">
                         <label for="cardholderName" class="form-label">Cardholder Name</label>
@@ -128,8 +127,9 @@
 
                 <!-- Submit button -->
                 <button type="submit" class="btn btn-primary">Submit Order</button>
-            </form>
-        </section>
+
+            </section>
+        </form>
     </div>
 
     <!-- Include Bootstrap JS and any additional scripts if needed -->
