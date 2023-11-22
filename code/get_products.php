@@ -8,29 +8,24 @@ $database = "web_db"; // Replace with your database name
 // Create a connection to the MySQL database
 $conn = new mysqli($servername, $username, $password, $database);
 
-// Check connection
 if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+    die('Error de conexión: ' . $conn->connect_error);
 }
 
-// Query to fetch data from the table
-$sql = "SELECT ID, Nombre, Precio, Imagen, Descripcion, AnoDeCreacion, Estilo, Autor, TipoDeArte FROM obrasdearte";
-$result = $conn->query($sql);
+// Obtener la lista completa de obras de arte
+$result = $conn->query("SELECT * FROM obrasdearte");
 
+// Mostrar las obras de arte
 if ($result->num_rows > 0) {
-    $data = array();
     while ($row = $result->fetch_assoc()) {
-        $data[] = $row;
+        echo '<div class="artwork">';
+        echo '<p>' . $row['Nombre'] . '</p>';
+        echo '<button class="edit-btn" data-id="' . $row['ID'] . '">Editar</button>';
+        echo '</div>';
     }
-
-    // Return data as JSON
-    header('Content-Type: application/json');
-    echo json_encode($data);
 } else {
-    echo "No data found";
+    echo 'No se encontraron obras de arte.';
 }
 
-
-// Close the database connection
 $conn->close();
 ?>

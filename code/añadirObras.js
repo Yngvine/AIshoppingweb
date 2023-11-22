@@ -20,43 +20,10 @@ document.addEventListener("DOMContentLoaded", function() {
         var filtroPrecioMin = document.getElementById('filtroPrecioMin').value;
         var filtroPrecioMax = document.getElementById('filtroPrecioMax').value;
         var filtroEstilo = document.getElementById('filtroEstilo').value;
-        var filtroNombre = document.getElementById('filtroNombre').value.toLowerCase();
-        var filtroAno = document.getElementById('filtroAno').value.toLowerCase();
-        var filtroAutor = document.getElementById('filtroAutor').value.toLowerCase();
-    
-        var elementosFiltrados = data.filter(function(elemento) {
-            var precio = parseFloat(elemento.Precio);
-    
-            var pasaFiltroPrecio = true;
-            if (filtroPrecioMin !== '' && filtroPrecioMax !== '') {
-                pasaFiltroPrecio = precio >= parseFloat(filtroPrecioMin) && precio <= parseFloat(filtroPrecioMax);
-            }
-    
-            var pasaFiltroEstilo = true;
-            if (filtroEstilo !== '') {
-                pasaFiltroEstilo = elemento.Estilo.toLowerCase().includes(filtroEstilo.toLowerCase());
-            }
-    
-            var pasaFiltroNombre = true;
-            if (filtroNombre !== '') {
-                pasaFiltroNombre = elemento.Nombre.toLowerCase().includes(filtroNombre);
-            }
-    
-            var pasaFiltroAno = true;
-            if (filtroAno !== '') {
-                pasaFiltroAno = elemento.AnoDeCreacion.toLowerCase().includes(filtroAno);
-            }
-    
-            var pasaFiltroAutor = true;
-            if (filtroAutor !== '') {
-                pasaFiltroAutor = elemento.Autor.toLowerCase().includes(filtroAutor);
-            }
-    
-            return pasaFiltroPrecio && pasaFiltroEstilo && pasaFiltroNombre && pasaFiltroAno && pasaFiltroAutor;
-        });
-    
+        var elementosFiltrados = filtrarElementos(filtroPrecioMin, filtroPrecioMax, filtroEstilo);
+
         var totalPages = Math.ceil(elementosFiltrados.length / elementosPorPagina); // Calcular las páginas
-    
+
         // Actualizar lógica de paginación
         var inicio = (numeroPagina - 1) * elementosPorPagina;
         var fin = inicio + elementosPorPagina;
@@ -70,52 +37,22 @@ document.addEventListener("DOMContentLoaded", function() {
             elementosHtml += '<div class="card-body">';
             elementosHtml += '<h5 class="card-title">' + elemento.Nombre + '</h5>';
             elementosHtml += '<p class="card-text author"><span>Autor:</span> ' + elemento.Autor + '</p>';
-            elementosHtml += '<p class="card-text"><span class="price bg-warning text-dark rounded px-2">Precio: ' + elemento.Precio + '</span></p>';
-            elementosHtml += '<button class="btn btn-secondary info-btn" data-bs-toggle="modal" data-bs-target="#infoModal' + elemento.id + '">+ Info</button>';
+            elementosHtml += '<p class="card-text"><span class="price bg-warning text-dark rounded px-2">Precio: ' + elemento.Precio + '€</span></p>';
+            elementosHtml += '<a href="producto.html?id=' + elemento.ID + '" class="btn btn-secondary info-btn">+ Info</a>';
             // Add to Cart button
             elementosHtml += '<button class="btn btn-primary add-to-cart-btn" onclick="addToCart(' + elemento.ID + ')">Add to Cart</button>';
             elementosHtml += '</div></div></div>';
-
-            // Modal para la información adicional
-            elementosHtml += '<div class="modal fade" id="infoModal' + elemento.id + '" tabindex="-1">';
-            elementosHtml += '<div class="modal-dialog">';
-            elementosHtml += '<div class="modal-content">';
-            elementosHtml += '<div class="modal-header">';
-            elementosHtml += '<h5 class="modal-title">Información Adicional</h5>';
-            elementosHtml += '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
-            elementosHtml += '</div>';  
-            elementosHtml += '<div class="modal-body">';
-            elementosHtml += '<p><strong>Descripción:</strong> ' + elemento.Descripcion + '</p>';
-            elementosHtml += '<p><strong>Año de Creación:</strong> ' + elemento.AnoDeCreacion + '</p>';
-            elementosHtml += '<p><strong>Estilo:</strong> ' + elemento.Estilo + '</p>';
-            elementosHtml += '</div></div></div></div>';
         });
 
         document.getElementById("elementos").innerHTML = '<div class="row">' + elementosHtml + '</div>';
+        updatePagination(totalPages, numeroPagina);
     }    
 
-    // Agregar evento al botón de filtrar por precio
-    document.getElementById("filtrarBtn").addEventListener("click", function() {
-        renderizarPagina(paginaActual);
-    });
-
-    // Event listeners para botones de paginación
-    document.getElementById("prevPage").addEventListener("click", function() {
-        if (paginaActual > 1) {
-            paginaActual--;
-            renderizarPagina(paginaActual);
-        }
-    });
-
-    document.getElementById("nextPage").addEventListener("click", function() {
-        var filtroPrecioMin = document.getElementById('filtroPrecioMin').value;
-        var filtroPrecioMax = document.getElementById('filtroPrecioMax').value;
-        var filtroEstilo = document.getElementById('filtroEstilo').value;
-
-        var elementosFiltrados = data.filter(function(elemento) {
+    function filtrarElementos(filtroPrecioMin, filtroPrecioMax, filtroEstilo) {
+        return data.filter(function(elemento) {
             var precio = parseFloat(elemento.Precio);
-
             var pasaFiltroPrecio = true;
+
             if (filtroPrecioMin !== '' && filtroPrecioMax !== '') {
                 pasaFiltroPrecio = precio >= parseFloat(filtroPrecioMin) && precio <= parseFloat(filtroPrecioMax);
             }
@@ -127,15 +64,69 @@ document.addEventListener("DOMContentLoaded", function() {
 
             return pasaFiltroPrecio && pasaFiltroEstilo;
         });
+    }
 
-        var totalPages = Math.ceil(elementosFiltrados.length / elementosPorPagina);
-
-        if (paginaActual < totalPages) {
-            paginaActual++;
-            renderizarPagina(paginaActual);
+    function updatePagination(totalPages, currentPage) {
+        var paginationHtml = '<ul class="pagination justify-content-center">';
+    
+        // Botón de página anterior
+        if (currentPage > 1) {
+            paginationHtml += '<li class="page-item"><a class="page-link" href="#" id="prevPage">Página Anterior</a></li>';
+        } else {
+            paginationHtml += '<li class="page-item disabled"><span class="page-link">Página Anterior</span></li>';
         }
-    });
+    
+        // Botones para páginas individuales
+        for (var i = 1; i <= totalPages; i++) {
+            if (i === currentPage) {
+                paginationHtml += '<li class="page-item active"><span class="page-link">' + i + '</span></li>';
+            } else {
+                paginationHtml += '<li class="page-item"><a class="page-link" href="#" id="page-' + i + '">' + i + '</a></li>';
+            }
+        }
+    
+        // Botón de página siguiente
+        if (currentPage < totalPages) {
+            paginationHtml += '<li class="page-item"><a class="page-link" href="#" id="nextPage">Página Siguiente</a></li>';
+        } else {
+            paginationHtml += '<li class="page-item disabled"><span class="page-link">Página Siguiente</span></li>';
+        }
+    
+        paginationHtml += '</ul>';
+    
+        document.getElementById('pagination').innerHTML = paginationHtml;
+    
+        // Event listeners para los botones de paginación
+        var prevPageBtn = document.getElementById('prevPage');
+        if (prevPageBtn) {
+            prevPageBtn.addEventListener('click', function() {
+                if (currentPage > 1) {
+                    renderizarPagina(currentPage - 1);
+                }
+            });
+        }
+    
+        var nextPageBtn = document.getElementById('nextPage');
+        if (nextPageBtn) {
+            nextPageBtn.addEventListener('click', function() {
+                if (currentPage < totalPages) {
+                    renderizarPagina(currentPage + 1);
+                }
+            });
+        }
+    
+        for (var j = 1; j <= totalPages; j++) {
+            var pageBtn = document.getElementById('page-' + j);
+            if (pageBtn) {
+                pageBtn.addEventListener('click', function(event) {
+                    var pageNumber = parseInt(event.target.innerHTML);
+                    renderizarPagina(pageNumber);
+                });
+            }
+        }
+    }
 });
+
 
 function addToCart(elementID) {
     // Make an AJAX call to your PHP script for adding to the cart
