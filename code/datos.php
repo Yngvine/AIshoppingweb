@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Query to fetch data from the table
-$sql = "SELECT ID, Nombre, Precio, Imagen, Descripcion, AnoDeCreacion, Estilo, Autor, TipoDeArte FROM obrasdearte";
+$sql = "SELECT ID, Nombre, Precio, Imagen, Descripcion, AnoDeCreacion, Estilo, Autor, TipoDeArte, Vendida FROM obrasdearte";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {

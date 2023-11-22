@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", function() {
             elementosHtml += '<h5 class="card-title">' + elemento.Nombre + '</h5>';
             elementosHtml += '<p class="card-text author"><span>Autor:</span> ' + elemento.Autor + '</p>';
             elementosHtml += '<p class="card-text"><span class="price bg-warning text-dark rounded px-2">Precio: ' + elemento.Precio + '€</span></p>';
-            elementosHtml += '<a href="producto.html?id=' + elemento.ID + '" class="btn btn-secondary info-btn">+ Info</a>';
+            elementosHtml += '<a href="producto.php?id=' + elemento.ID + '" class="btn btn-secondary info-btn">+ Info</a>';
             elementosHtml += '</div></div></div>';
         });
 

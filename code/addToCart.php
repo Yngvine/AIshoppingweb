@@ -36,15 +36,32 @@ if ($userIDResult->num_rows > 0) {
         // Artwork is already in the cart
         echo json_encode(array('success' => false, 'message' => 'Item is already in the cart'));
     } else {
-        // Add the artwork to the user's cart
-        $addToCartQuery = "INSERT INTO carrito (IDusuario, IDobra) VALUES ('$userID', '$artworkID')";
+        // Check if the artwork is available (vendida is false)
+        $checkAvailabilityQuery = "SELECT vendida FROM obrasdearte WHERE ID = '$artworkID'";
+        $checkAvailabilityResult = $conn->query($checkAvailabilityQuery);
 
-        if ($conn->query($addToCartQuery) === TRUE) {
-            // Successfully added to the cart
-            echo json_encode(array('success' => true, 'message' => 'Item added to cart successfully'));
+        if ($checkAvailabilityResult->num_rows > 0) {
+            $artworkData = $checkAvailabilityResult->fetch_assoc();
+            $isArtworkSold = $artworkData['vendida'];
+
+            if (!$isArtworkSold) {
+                // Add the artwork to the user's cart
+                $addToCartQuery = "INSERT INTO carrito (IDusuario, IDobra) VALUES ('$userID', '$artworkID')";
+
+                if ($conn->query($addToCartQuery) === TRUE) {
+                    // Successfully added to the cart
+                    echo json_encode(array('success' => true, 'message' => 'Item added to cart successfully'));
+                } else {
+                    // Failed to add to the cart
+                    echo json_encode(array('success' => false, 'error' => $conn->error));
+                }
+            } else {
+                // Artwork is sold
+                echo json_encode(array('success' => false, 'message' => 'Item is sold and cannot be added to the cart'));
+            }
         } else {
-            // Failed to add to the cart
-            echo json_encode(array('success' => false, 'error' => $conn->error));
+            // Failed to check availability
+            echo json_encode(array('success' => false, 'error' => 'Failed to check artwork availability'));
         }
     }
 } else {
